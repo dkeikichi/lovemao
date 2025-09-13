@@ -1,691 +1,237 @@
 <!DOCTYPE html>
-<html lang="ja">
+
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>お誕生日おめでとう！ 💕</title>
+    <title>斉藤真桜の誕生日カウントダウン</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Kosugi+Maru:wght@400&family=M+PLUS+Rounded+1c:wght@300;400;500;700&display=swap');
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'M PLUS Rounded 1c', 'Kosugi Maru', sans-serif;
-            background: linear-gradient(135deg, #ffb3d9 0%, #ffccf2 20%, #e6ccff 40%, #ccf2ff 60%, #ffe6f2 80%, #fff0f5 100%);
-            min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
-        }
+```
+    body {
+        font-family: Arial, sans-serif;
+        background: #2c3e50;
+        color: white;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
 
-        /* Kawaii floating elements */
-        .kawaii-float {
-            position: absolute;
-            font-size: 2rem;
-            animation: kawaiiBounce 10s ease-in-out infinite;
-            pointer-events: none;
-            opacity: 0.8;
-        }
+    .title {
+        font-size: 4rem;
+        margin-bottom: 2rem;
+        font-weight: normal;
+    }
 
-        .kawaii-float:nth-child(odd) {
-            animation-delay: 1s;
-        }
+    .countdown {
+        display: flex;
+        gap: 3rem;
+        margin-bottom: 2rem;
+    }
 
-        .kawaii-float:nth-child(even) {
-            animation-delay: 3s;
-        }
+    .time-unit {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 
-        @keyframes kawaiiBounce {
-            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            10%, 90% { opacity: 0.8; }
-            30% { transform: translateY(20px) rotate(180deg); }
-            70% { transform: translateY(-30px) rotate(360deg); }
-        }
+    .time-number {
+        font-size: 6rem;
+        font-weight: bold;
+        line-height: 1;
+    }
 
-        /* Sakura petals */
-        .sakura {
-            position: absolute;
-            width: 15px;
-            height: 15px;
-            background: radial-gradient(circle, #ffb3d9, #ff99cc);
-            border-radius: 50% 0 50% 0;
-            animation: sakuraFall 12s linear infinite;
-            pointer-events: none;
-        }
+    .time-label {
+        font-size: 1.5rem;
+        margin-top: 0.5rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
 
-        .sakura:nth-child(odd) {
-            animation-delay: 2s;
-            background: radial-gradient(circle, #ffccf2, #ffb3e6);
-        }
+    .target-date {
+        font-size: 2rem;
+        opacity: 0.8;
+    }
 
-        @keyframes sakuraFall {
-            0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
-        }
+    .video-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: black;
+        display: none;
+        z-index: 1000;
+    }
 
-        /* Main container */
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 1rem;
-            position: relative;
-            z-index: 10;
-        }
+    .video-frame {
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
 
-        /* Header section - Anime style */
-        .header {
-            text-align: center;
-            margin-bottom: 2rem;
-            animation: popIn 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 30px;
-            padding: 2.5rem 1.5rem;
-            backdrop-filter: blur(15px);
-            border: 3px solid #ffb3d9;
-            box-shadow: 0 10px 40px rgba(255, 179, 217, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
+    .celebration {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 4rem;
+        font-weight: bold;
+        display: none;
+        z-index: 999;
+    }
 
-        .header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            animation: shine 3s ease-in-out infinite;
+    @media (max-width: 768px) {
+        .title {
+            font-size: 2.5rem;
         }
-
-        .header h1 {
-            font-size: 3.2rem;
-            font-weight: 700;
-            background: linear-gradient(45deg, #ff1493, #ff69b4, #da70d6, #9370db);
-            background-size: 300% 300%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: rainbowShimmer 3s ease-in-out infinite;
-            margin-bottom: 0.8rem;
-            text-shadow: 0 0 20px rgba(255, 20, 147, 0.3);
-        }
-
-        .header .japanese-subtitle {
-            font-size: 1.4rem;
-            color: #d63384;
-            font-weight: 500;
-            margin-bottom: 1rem;
-            font-family: 'Kosugi Maru', sans-serif;
-        }
-
-        .cute-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #ff69b4, #ff1493, #da70d6);
-            color: white;
-            padding: 1rem 2.5rem;
-            border-radius: 50px;
-            font-size: 1.2rem;
-            font-weight: 600;
-            box-shadow: 0 6px 20px rgba(255, 105, 180, 0.4);
-            animation: kawaiiBob 2s ease-in-out infinite;
-            border: 3px solid rgba(255, 255, 255, 0.5);
-            font-family: 'Kosugi Maru', sans-serif;
-        }
-
-        @keyframes rainbowShimmer {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-
-        @keyframes popIn {
-            0% { transform: scale(0) rotate(-360deg); opacity: 0; }
-            70% { transform: scale(1.1) rotate(10deg); }
-            100% { transform: scale(1) rotate(0deg); opacity: 1; }
-        }
-
-        @keyframes kawaiiBob {
-            0%, 100% { transform: translateY(0px) rotate(-2deg); }
-            50% { transform: translateY(-8px) rotate(2deg); }
-        }
-
-        @keyframes shine {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-        }
-
-        /* Content cards - Kawaii style */
-        .content-grid {
-            display: grid;
-            grid-template-columns: 1fr;
+        
+        .countdown {
             gap: 1.5rem;
-            margin-bottom: 2rem;
+            flex-wrap: wrap;
         }
-
-        .kawaii-card {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 25px;
-            padding: 2rem;
-            box-shadow: 0 10px 35px rgba(255, 179, 217, 0.2);
-            backdrop-filter: blur(20px);
-            border: 3px solid;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            animation: slideUpKawaii 1.2s ease-out;
-            position: relative;
-            overflow: hidden;
+        
+        .time-number {
+            font-size: 4rem;
         }
-
-        .kawaii-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 6px;
-            border-radius: 25px 25px 0 0;
-        }
-
-        .kawaii-card:hover {
-            transform: translateY(-12px) scale(1.03) rotate(1deg);
-            box-shadow: 0 20px 50px rgba(255, 179, 217, 0.35);
-        }
-
-        .kawaii-card h2 {
-            margin-bottom: 1.2rem;
-            font-size: 1.8rem;
-            font-weight: 600;
-            text-align: center;
-            font-family: 'Kosugi Maru', sans-serif;
-        }
-
-        .kawaii-card p {
-            line-height: 1.8;
-            text-align: center;
-            margin-bottom: 1.5rem;
+        
+        .time-label {
             font-size: 1rem;
-            font-family: 'M PLUS Rounded 1c', sans-serif;
         }
+        
+        .target-date {
+            font-size: 1.5rem;
+        }
+        
+        .celebration {
+            font-size: 2.5rem;
+            padding: 0 1rem;
+        }
+    }
+</style>
+```
 
-        /* Music card - Special design */
-        .music-kawaii {
-            border-color: #ff69b4;
-            background: linear-gradient(135deg, rgba(255, 182, 193, 0.3), rgba(255, 192, 203, 0.3));
-        }
-
-        .music-kawaii::before {
-            background: linear-gradient(90deg, #ff69b4, #da70d6, #87ceeb);
-        }
-
-        .music-kawaii h2 {
-            color: #d63384;
-        }
-
-        .music-kawaii p {
-            color: #8b0066;
-        }
-
-        /* Countdown timer - Kawaii style */
-        #countdown-timer {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
-            gap: 1rem;
-            margin: 2rem 0;
-            max-width: 450px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .time-unit-kawaii {
-            text-align: center;
-            background: linear-gradient(135deg, #ff69b4, #da70d6, #9370db);
-            border-radius: 20px;
-            padding: 1.5rem 0.8rem;
-            box-shadow: 0 8px 25px rgba(255, 105, 180, 0.4);
-            animation: kawaiiBounceSmall 2.5s ease-in-out infinite;
-            border: 3px solid rgba(255, 255, 255, 0.4);
-            position: relative;
-        }
-
-        .time-unit-kawaii::before {
-            content: '✨';
-            position: absolute;
-            top: -10px;
-            right: -5px;
-            font-size: 1rem;
-            animation: sparkleRotate 3s linear infinite;
-        }
-
-        .time-unit-kawaii span {
-            display: block;
-            font-size: 2rem;
-            font-weight: 700;
-            color: white;
-            text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
-            font-family: 'M PLUS Rounded 1c', sans-serif;
-        }
-
-        .time-unit-kawaii label {
-            display: block;
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.95);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 0.5rem;
-            font-weight: 500;
-            font-family: 'Kosugi Maru', sans-serif;
-        }
-
-        @keyframes kawaiiBounceSmall {
-            0%, 100% { transform: scale(1) rotate(-1deg); }
-            50% { transform: scale(1.08) rotate(1deg); box-shadow: 0 12px 35px rgba(255, 105, 180, 0.5); }
-        }
-
-        @keyframes sparkleRotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* YouTube section - Kawaii style */
-        .youtube-kawaii {
-            position: relative;
-            width: 100%;
-            height: 0;
-            padding-bottom: 56.25%;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 35px rgba(255, 105, 180, 0.4);
-            margin: 1.5rem 0;
-            border: 4px solid #ffb3d9;
-        }
-
-        .youtube-kawaii iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        .kawaii-button {
-            display: inline-block;
-            background: linear-gradient(135deg, #ff69b4, #ff1493, #da70d6);
-            color: white;
-            padding: 1.2rem 3rem;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 1.1rem;
-            margin-top: 1.5rem;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 8px 25px rgba(255, 105, 180, 0.4);
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            font-family: 'Kosugi Maru', sans-serif;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .kawaii-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: left 0.5s;
-        }
-
-        .kawaii-button:hover::before {
-            left: 100%;
-        }
-
-        .kawaii-button:hover {
-            transform: scale(1.08) translateY(-3px) rotate(-1deg);
-            box-shadow: 0 12px 35px rgba(255, 105, 180, 0.6);
-        }
-
-        /* Memory and dreams cards */
-        .memories-kawaii {
-            border-color: #ffcc99;
-            background: linear-gradient(135deg, rgba(255, 204, 153, 0.3), rgba(255, 228, 196, 0.3));
-        }
-
-        .memories-kawaii::before {
-            background: linear-gradient(90deg, #ffcc99, #ffd700, #ffb347);
-        }
-
-        .memories-kawaii h2 {
-            color: #ff8c00;
-        }
-
-        .memories-kawaii p {
-            color: #cc6600;
-        }
-
-        .dreams-kawaii {
-            border-color: #87ceeb;
-            background: linear-gradient(135deg, rgba(135, 206, 235, 0.3), rgba(176, 224, 230, 0.3));
-        }
-
-        .dreams-kawaii::before {
-            background: linear-gradient(90deg, #87ceeb, #98fb98, #90ee90);
-        }
-
-        .dreams-kawaii h2 {
-            color: #4682b4;
-        }
-
-        .dreams-kawaii p {
-            color: #2f4f4f;
-        }
-
-        /* Birthday celebration */
-        #birthday-section {
-            animation: kawaiaCelebrate 2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        }
-
-        @keyframes kawaiaCelebrate {
-            0% { transform: scale(0.5) rotate(-10deg); opacity: 0; }
-            50% { transform: scale(1.2) rotate(5deg); opacity: 0.8; }
-            100% { transform: scale(1) rotate(0deg); opacity: 1; }
-        }
-
-        /* Footer - Kawaii style */
-        .kawaii-footer {
-            text-align: center;
-            padding: 2.5rem;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 25px;
-            backdrop-filter: blur(15px);
-            border: 3px solid #ffb3d9;
-            animation: fadeInKawaii 2.5s ease-out;
-            position: relative;
-        }
-
-        .kawaii-footer p {
-            color: #d63384;
-            font-size: 1.2rem;
-            font-weight: 500;
-            margin-bottom: 0.8rem;
-            font-family: 'Kosugi Maru', sans-serif;
-        }
-
-        @keyframes slideUpKawaii {
-            from { transform: translateY(80px) rotate(5deg); opacity: 0; }
-            to { transform: translateY(0) rotate(0deg); opacity: 1; }
-        }
-
-        @keyframes fadeInKawaii {
-            from { opacity: 0; transform: scale(0.8); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        /* Kawaii sparkle effects */
-        .kawaii-sparkle {
-            position: fixed;
-            font-size: 1.8rem;
-            animation: kawaiiSparkleGlow 2.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
-            pointer-events: none;
-            z-index: 1000;
-        }
-
-        @keyframes kawaiiSparkleGlow {
-            0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
-            30% { opacity: 0.8; transform: scale(1.2) rotate(180deg); }
-            70% { opacity: 1; transform: scale(0.8) rotate(360deg); }
-        }
-
-        /* Responsive design */
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2.5rem;
-            }
-            
-            .header .japanese-subtitle {
-                font-size: 1.2rem;
-            }
-            
-            .container {
-                padding: 0.5rem;
-            }
-            
-            .kawaii-card {
-                padding: 1.5rem;
-            }
-            
-            #countdown-timer {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 0.8rem;
-            }
-            
-            .time-unit-kawaii {
-                padding: 1.2rem 0.5rem;
-            }
-            
-            .time-unit-kawaii span {
-                font-size: 1.6rem;
-            }
-        }
-
-        /* Special kawaii cursor trail effect */
-        .heart-trail {
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
-            font-size: 1rem;
-            color: #ff69b4;
-            animation: heartTrail 1s ease-out forwards;
-        }
-
-        @keyframes heartTrail {
-            0% { opacity: 1; transform: scale(1); }
-            100% { opacity: 0; transform: scale(1.5) translateY(-20px); }
-        }
-    </style>
 </head>
 <body>
-    <!-- Kawaii floating elements -->
-    <div class="kawaii-float" style="left: 5%; animation-delay: 0s;">🌸</div>
-    <div class="kawaii-float" style="left: 15%; animation-delay: 1s;">💕</div>
-    <div class="kawaii-float" style="left: 25%; animation-delay: 2s;">🎀</div>
-    <div class="kawaii-float" style="left: 35%; animation-delay: 3s;">⭐</div>
-    <div class="kawaii-float" style="left: 45%; animation-delay: 4s;">💖</div>
-    <div class="kawaii-float" style="left: 55%; animation-delay: 0.5s;">🌙</div>
-    <div class="kawaii-float" style="left: 65%; animation-delay: 2.5s;">💝</div>
-    <div class="kawaii-float" style="left: 75%; animation-delay: 1.5s;">🦋</div>
-    <div class="kawaii-float" style="left: 85%; animation-delay: 3.5s;">✨</div>
-    <div class="kawaii-float" style="left: 95%; animation-delay: 2s;">🌺</div>
+    <h1 class="title">斉藤真桜<br>誕生日カウントダウン</h1>
 
-    <!-- Sakura petals -->
-    <div class="sakura" style="left: 10%; animation-delay: 0s;"></div>
-    <div class="sakura" style="left: 20%; animation-delay: 2s;"></div>
-    <div class="sakura" style="left: 30%; animation-delay: 4s;"></div>
-    <div class="sakura" style="left: 40%; animation-delay: 1s;"></div>
-    <div class="sakura" style="left: 50%; animation-delay: 3s;"></div>
-    <div class="sakura" style="left: 60%; animation-delay: 5s;"></div>
-    <div class="sakura" style="left: 70%; animation-delay: 1.5s;"></div>
-    <div class="sakura" style="left: 80%; animation-delay: 3.5s;"></div>
-    <div class="sakura" style="left: 90%; animation-delay: 0.5s;"></div>
-
-    <div class="container">
-        <header class="header">
-            <h1>お誕生日おめでとう！🎉</h1>
-            <p class="japanese-subtitle">今日はあなたの特別な日です！✨</p>
-            <div class="cute-badge">16歳の誕生日 💕</div>
-        </header>
-
-        <div class="content-grid">
-            <div class="kawaii-card music-kawaii">
-                <h2 id="music-title">⏰ もうすぐサプライズが！⏰</h2>
-                
-                <!-- Countdown Section -->
-                <div id="countdown-section">
-                    <p style="font-size: 1.1rem; color: #d63384; font-weight: 500; font-family: 'Kosugi Maru', sans-serif;">特別な何かが待ってるよ！🎁✨</p>
-                    <div id="countdown-timer">
-                        <div class="time-unit-kawaii">
-                            <span id="days">00</span>
-                            <label>日</label>
-                        </div>
-                        <div class="time-unit-kawaii">
-                            <span id="hours">00</span>
-                            <label>時間</label>
-                        </div>
-                        <div class="time-unit-kawaii">
-                            <span id="minutes">00</span>
-                            <label>分</label>
-                        </div>
-                        <div class="time-unit-kawaii">
-                            <span id="seconds">00</span>
-                            <label>秒</label>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Birthday Section -->
-                <div id="birthday-section" style="display: none;">
-                    <p style="font-size: 1.1rem; color: #d63384; font-weight: 500; font-family: 'Kosugi Maru', sans-serif;">この歌は君のためだけの特別な歌だよ！僕たちの素敵な思い出を思い出しながら聞いてね。君への愛がいっぱい込められてるから！💕🎵</p>
-                    
-                    <div class="youtube-kawaii">
-                        <iframe id="birthday-video"
-                            src="https://www.youtube.com/embed/s0WBLEeLmnM?autoplay=1&rel=0" 
-                            title="Special Birthday Song"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowfullscreen>
-                        </iframe>
-                    </div>
-                    
-                    <a href="https://www.youtube.com/watch?v=s0WBLEeLmnM&list=RDs0WBLEeLmnM&start_radio=1" 
-                       class="kawaii-button" target="_blank">
-                        🎵 もっと聞く 🎵
-                    </a>
-                </div>
-            </div>
-
-            <div class="kawaii-card memories-kawaii">
-                <h2>🌟 大切な思い出たち 🌟</h2>
-                <p>君と過ごした毎日が宝物みたい！一緒に笑ったり、深い話をしたり、君がいるだけで僕の世界がキラキラ輝いてる。いつも僕を笑顔にしてくれて本当にありがとう！🌈💫</p>
-            </div>
-
-            <div class="kawaii-card dreams-kawaii">
-                <h2>🦋 これからの夢と冒険 🦋</h2>
-                <p>16歳はまだまだ始まり！君の夢を追いかけて、世界中を冒険して、もっともっと輝いてほしい。君と一緒なら、どんな未来も素敵になるって信じてる！✨🌸</p>
-            </div>
-        </div>
-
-        <footer class="kawaii-footer">
-            <p>💕 16歳になった君は、もっともっと素敵になったね！💕</p>
-            <p>愛をいっぱい込めて、いつまでも... 🥰</p>
-            <p>お誕生日おめでとう、愛しい人！🎂✨</p>
-        </footer>
+```
+<div class="countdown">
+    <div class="time-unit">
+        <span class="time-number" id="days">00</span>
+        <span class="time-label">日</span>
     </div>
+    <div class="time-unit">
+        <span class="time-number" id="hours">00</span>
+        <span class="time-label">時間</span>
+    </div>
+    <div class="time-unit">
+        <span class="time-number" id="minutes">00</span>
+        <span class="time-label">分</span>
+    </div>
+    <div class="time-unit">
+        <span class="time-number" id="seconds">00</span>
+        <span class="time-label">秒</span>
+    </div>
+</div>
 
-    <script>
-        // Birthday countdown functionality
-        const birthdayDate = new Date('2024-09-29T00:00:00').getTime();
+<div class="target-date" id="targetDate"></div>
+
+<div class="celebration" id="celebration">
+    🎉 真桜、お誕生日おめでとう！ 🎉
+</div>
+
+<div class="video-container" id="videoContainer">
+    <iframe class="video-frame" id="videoFrame" 
+            src="" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen>
+    </iframe>
+</div>
+
+<script>
+    function updateCountdown() {
+        const now = new Date();
+        const currentYear = now.getFullYear();
         
-        function updateCountdown() {
-            const now = new Date().getTime();
-            const distance = birthdayDate - now;
-            
-            if (distance > 0) {
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                
-                document.getElementById('days').textContent = days.toString().padStart(2, '0');
-                document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
-                document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
-                document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
-            } else {
-                showBirthdaySurprise();
-            }
+        // Target: September 30th 00:00 of current year
+        let targetDate = new Date(currentYear, 8, 30, 0, 0, 0, 0);
+        
+        // If we've passed this year's September 30th 00:00, target next year
+        if (now > targetDate) {
+            targetDate = new Date(currentYear + 1, 8, 30, 0, 0, 0, 0);
         }
         
-        function showBirthdaySurprise() {
-            document.getElementById('countdown-section').style.display = 'none';
-            document.getElementById('music-title').innerHTML = '🎵 お誕生日おめでとう！🎵';
-            
-            const birthdaySection = document.getElementById('birthday-section');
-            birthdaySection.style.display = 'block';
-            
-            createKawaiiBirthdayExplosion();
-            document.title = '🎉 お誕生日おめでとう！🎉';
+        // Update target date display
+        document.getElementById('targetDate').textContent = 
+            `${targetDate.getFullYear()}年9月30日 00:00`;
+        
+        const timeDiff = targetDate - now;
+        
+        // Check if it's September 30th 00:00
+        const timeSinceSep30 = now - targetDate;
+        
+        if (timeSinceSep30 >= 0 && timeSinceSep30 <= 5000) {
+            showVideo();
+            return;
         }
         
-        function createKawaiiBirthdayExplosion() {
-            const kawaiEmojis = ['🎉', '🎊', '🎈', '🥳', '✨', '🌟', '💖', '🎂', '🌸', '🦋', '💕', '🎀', '⭐', '🌙', '💝', '🌺'];
-            
-            for (let i = 0; i < 80; i++) {
-                setTimeout(() => {
-                    const celebration = document.createElement('div');
-                    celebration.innerHTML = kawaiEmojis[Math.floor(Math.random() * kawaiEmojis.length)];
-                    celebration.style.position = 'fixed';
-                    celebration.style.left = Math.random() * window.innerWidth + 'px';
-                    celebration.style.top = Math.random() * window.innerHeight + 'px';
-                    celebration.style.fontSize = (1.5 + Math.random() * 1) + 'rem';
-                    celebration.style.pointerEvents = 'none';
-                    celebration.style.zIndex = '1000';
-                    celebration.style.animation = 'kawaiaCelebrate 4s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards';
-                    
-                    document.body.appendChild(celebration);
-                    
-                    setTimeout(() => {
-                        celebration.remove();
-                    }, 4000);
-                }, i * 60);
-            }
-        }
         
-        // Check if it's already birthday time
-        const now = new Date().getTime();
-        if (now >= birthdayDate) {
-            showBirthdaySurprise();
+        if (timeDiff > 0) {
+            const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+            
+            document.getElementById('days').textContent = String(days).padStart(2, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
         } else {
-            updateCountdown();
-            setInterval(updateCountdown, 1000);
+            // Time's up! Check if we need to show video
+            if (Math.abs(now - targetDate) <= 5000) {
+                showVideo();
+            }
         }
-
-        // Kawaii sparkle effects
-        document.addEventListener('click', function(e) {
-            createKawaiiSparkle(e.clientX, e.clientY);
-        });
-
-        function createKawaiiSparkle(x, y) {
-            const kawaiiSparkles = ['✨', '💖', '🌟', '💕', '🌸', '⭐', '💝', '🎀'];
-            const sparkle = document.createElement('div');
-            sparkle.className = 'kawaii-sparkle';
-            sparkle.innerHTML = kawaiiSparkles[Math.floor(Math.random() * kawaiiSparkles.length)];
-            sparkle.style.left = x + 'px';
-            sparkle.style.top = y + 'px';
-            sparkle.style.color = ['#ff69b4', '#da70d6', '#87ceeb', '#98fb98'][Math.floor(Math.random() * 4)];
-            document.body.appendChild(sparkle);
+    }
+    
+    function showVideo() {
+        document.getElementById('celebration').style.display = 'block';
+        
+        setTimeout(() => {
+            document.getElementById('celebration').style.display = 'none';
+            const videoContainer = document.getElementById('videoContainer');
+            const videoFrame = document.getElementById('videoFrame');
+            
+            videoFrame.src = 'https://www.youtube.com/embed/s0WBLEeLmnM?autoplay=1&si=svgC2wnpOyyccxUK';
+            videoContainer.style.display = 'block';
             
             setTimeout(() => {
-                sparkle.remove();
-            }, 2500);
+                videoContainer.style.display = 'none';
+                videoFrame.src = '';
+            }, 300000);
+            
+        }, 3000);
+    }
+    
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+    
+    document.addEventListener('visibilitychange', function() {
+        if (!document.hidden) {
+            updateCountdown();
         }
+    });
+</script>
+```
 
-        // Kawaii cursor trail
-        let mouseTrail = [];
-        document.addEventListener('mousemove', function(e) {
-            if (Math.random() < 0.1) {
-                const heart = document.createElement('div');
-                heart.className = 'heart-trail';
-                heart.innerHTML = ['💕', '💖', '✨'][Math.floor(Math.random() * 3)];
-                heart.style.left = e.clientX + 'px';
-                heart.style.top = e.clientY + 'px';
-                document.body.appendChild(heart);
-                
-                setTimeout(() => {
-                    heart.remove();
-                }, 1000);
-            }
-        });
-
-        // Random kawaii sparkles
-        setInterval(() => {
-            if (Math.random() < 0.
+</body>
+</html>
